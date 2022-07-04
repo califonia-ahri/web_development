@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <title>TODO list app</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Done list</h1>
+      <p>
+        <a href="{% url 'todo_list' %}" class="btn btn-primary">To Home</a>
+      </p>
+      <ul class="list-group">
+        {% for done in dones%}
+        <li class="list-group-item">
+          <a href="{% url 'todo_detail' pk=done.pk %}">{{done.title}}</a>
+          {% if todo.important %}
+          <span class="badge badge-danger">!</span>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </body>
+</html>
