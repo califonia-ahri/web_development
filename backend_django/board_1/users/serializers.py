@@ -15,6 +15,7 @@ class RegisterSerializer(serializers.ModelSerializer):  # register serializer
     )
     
     password = serializers.CharField(
+        help_text="password input",
         write_only = True,
         validators=[validate_password],
         required = True
