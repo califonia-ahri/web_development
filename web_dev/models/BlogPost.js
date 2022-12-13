@@ -3,7 +3,12 @@ const Schema = mongoose.Schema;
 
 const BlogPostSchema = new Schema({
     title:String,
-    body:String
+    body:String,
+    username: String,
+    dateposted: {
+        type: Date, 
+        default: new Date()
+    }
 });
 
 const BlogPost = mongoose.model('BlogPost', BlogPostSchema);
