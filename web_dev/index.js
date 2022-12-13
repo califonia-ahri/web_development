@@ -4,7 +4,8 @@ const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
 const BlogPost = require('./models/BlogPost');
-const fileupload = require('express-fileupload')
+const fileupload = require('express-fileupload');
+const newPostController = require("./controllers/newPost");
 
 // connect to mongo db
 mongoose.connect('mongodb://localhost/Blog_DB');
@@ -30,12 +31,28 @@ BlogPost.findByInAndDelete("key", (err, blogpost)=>{
     console.log(err, blogpost);
 });
 
+// middleware simple example
+const sillyMiddleware = (req, res, next) => {
+    console.log("Silly Middleware running...");
+    next();     // required
+};
+
+// middleware which checking every field is filled
+const formValidationMiddleware = (req, res, next) => {
+    if(req.files == null || req.body.title == null || req.body.body == null){
+        return res.redirect('/posts/new');
+    }
+    next();     // required
+}
+
 // app middlewares
 app.use(express.static('public'));
 app.use('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(fileupload());
+app.use(sillyMiddleware);
+app.use('/posts/store', formValidationMiddleware);
 
 // assign port
 app.listen(3000, ()=>{
@@ -67,6 +84,7 @@ app.get('/post/:id', async (req, res) => {
     const aPost = await BlogPost.findById(req.parmas.id);
     res.render("post", {aPost});
 });
+app.get('/posts/new', newPostController);
 
 // route not using asynchronous programming
 /* 
