@@ -5,6 +5,26 @@ const mongoose = require('mongoose');
 const BlogPost = require('./models/BlogPost');
 
 mongoose.connect('mongodb://localhost/Blog_DB');
+
+BlogPost.create({
+    title:"처음 포스팅하는 블로그",
+    body: "종강시켜주세요.."
+}, (error, blogpost) => {
+    console.log(error, blogpost);
+});
+
+BlogPost.find({title:/포스팅/}, (err, blogpost)=>{
+    console.log(blogpost);
+})
+
+BlogPost.findByInAndUpdate("key", {title: "수정된 제목"}, (err, blogpost)=>{
+    console.log(blogpost);
+});
+
+BlogPost.findByInAndDelete("key", (err, blogpost)=>{
+    console.log(err, blogpost);
+});
+
 app.use(express.static('public'));
 app.use('view engine', 'ejs');
 
