@@ -30,7 +30,7 @@ BlogPost.findByInAndDelete("key", (err, blogpost)=>{
     console.log(err, blogpost);
 });
 
-// app setting
+// app middlewares
 app.use(express.static('public'));
 app.use('view engine', 'ejs');
 app.use(express.json());
