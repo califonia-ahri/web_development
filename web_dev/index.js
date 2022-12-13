@@ -27,6 +27,8 @@ BlogPost.findByInAndDelete("key", (err, blogpost)=>{
 
 app.use(express.static('public'));
 app.use('view engine', 'ejs');
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 
 app.listen(3000, ()=>{
     console.log('express server running on port 3000');
@@ -43,4 +45,7 @@ app.get('/contact', (req, res)=>{
 });
 app.get('/post', (req, res)=>{
     res.sendFile(path.resolve(__dirname, "pages/post.html"));
+});
+app.get('/posts/new', (req, res) => {
+    res.render('create');
 });
