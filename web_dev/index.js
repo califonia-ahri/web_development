@@ -10,3 +10,9 @@ app.get("/", (req, res)=>{
         age:'20'
     })
 });
+
+const path = require('path');
+
+app.get('/about',(req, res)=>{
+    res.sendFile(path.resolve(__dirname, "./aboutpage.html"));
+});
