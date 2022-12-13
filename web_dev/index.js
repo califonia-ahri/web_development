@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const BlogPost = require('./models/BlogPost');
 const fileupload = require('express-fileupload');
 const newPostController = require("./controllers/newPost");
+const newUserController = require("./controllers/newUser");
 
 // connect to mongo db
 mongoose.connect('mongodb://localhost/Blog_DB');
@@ -85,6 +86,7 @@ app.get('/post/:id', async (req, res) => {
     res.render("post", {aPost});
 });
 app.get('/posts/new', newPostController);
+app.get("/auth/register", newUserController);
 
 // route not using asynchronous programming
 /* 
