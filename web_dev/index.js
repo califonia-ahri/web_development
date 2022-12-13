@@ -41,9 +41,14 @@ app.listen(3000, ()=>{
 })
 
 // connect view
-app.get("/", (req, res)=>{
+/* app.get("/", (req, res)=>{
     res.sendFile(path.resolve(__dirname, "pages/index.html"));
 });
+ */
+app.get("/", async (req, res) => {
+    const postList = await BlogPost.find({});
+    res.render("index", {postList}); 
+})
 app.get('/about',(req, res)=>{
     res.sendFile(path.resolve(__dirname, "pages/aboutpage.html"));
 });
