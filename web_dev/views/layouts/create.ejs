@@ -1,4 +1,7 @@
-<form action="/posts/store" id="newPostForm" method="post">
-    <input class="form-contorl" name="title" id="title">
-    <textarea name="body" class="form-control"></textarea>
+<form action="/posts/store" id="newPostForm" method="post" enctype="multipart/form-data">
+    <div class="form-floating">
+        <input class="form-contorl" name="title" id="title">
+        <label for="body">Image</label>
+        <textarea name="body" class="form-control"></textarea>
+    </div>
 </form>

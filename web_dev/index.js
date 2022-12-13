@@ -4,6 +4,7 @@ const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
 const BlogPost = require('./models/BlogPost');
+const fileupload = require('express-fileupload')
 
 // connect to mongo db
 mongoose.connect('mongodb://localhost/Blog_DB');
@@ -34,6 +35,7 @@ app.use(express.static('public'));
 app.use('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+app.use(fileupload());
 
 // assign port
 app.listen(3000, ()=>{
@@ -80,4 +82,15 @@ app.post('/posts/store', async (req, res) => {
     await BlogPost.create(req.body);
     console.log("post added: " + req.body);
     res.redirect("/");
+});
+
+app.post('/posts/store', async (req, res) => {
+    let img = req.files.image;
+    img.mv(path.resolve(__dirname, "public/images", img.name), async (err) => {
+        if(err){
+            console.log(err);
+        }
+        await BlogPost.create({...req.body, image: '/images/' + img.name});
+        res.redirect("/");
+    });
 });
