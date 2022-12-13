@@ -7,6 +7,7 @@ const BlogPost = require('./models/BlogPost');
 const fileupload = require('express-fileupload');
 const newPostController = require("./controllers/newPost");
 const newUserController = require("./controllers/newUser");
+const storeUserController = require('./controllers/storeUser');
 
 // connect to mongo db
 mongoose.connect('mongodb://localhost/Blog_DB');
@@ -114,3 +115,5 @@ app.post('/posts/store', async (req, res) => {
         res.redirect("/");
     });
 });
+
+app.post('/users/store', storeUserController);
