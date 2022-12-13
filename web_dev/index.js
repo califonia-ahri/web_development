@@ -1,7 +1,10 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const mongoose = require('mongoose');
+const BlogPost = require('./models/BlogPost');
 
+mongoose.connect('mongodb://localhost/Blog_DB');
 app.use(express.static('public'));
 app.use('view engine', 'ejs');
 
