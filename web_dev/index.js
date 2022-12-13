@@ -3,6 +3,8 @@ const app = express();
 const path = require('path');
 
 app.use(express.static('public'));
+app.use('view engine', 'ejs');
+
 app.listen(3000, ()=>{
     console.log('express server running on port 3000');
 })
