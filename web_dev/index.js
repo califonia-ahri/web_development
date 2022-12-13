@@ -1,11 +1,14 @@
+// import framework
 const express = require('express');
 const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
 const BlogPost = require('./models/BlogPost');
 
+// connect to mongo db
 mongoose.connect('mongodb://localhost/Blog_DB');
 
+// create model
 BlogPost.create({
     title:"처음 포스팅하는 블로그",
     body: "종강시켜주세요.."
@@ -13,6 +16,7 @@ BlogPost.create({
     console.log(error, blogpost);
 });
 
+//CRUD
 BlogPost.find({title:/포스팅/}, (err, blogpost)=>{
     console.log(blogpost);
 })
@@ -25,15 +29,18 @@ BlogPost.findByInAndDelete("key", (err, blogpost)=>{
     console.log(err, blogpost);
 });
 
+// app setting
 app.use(express.static('public'));
 app.use('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
+// assign port
 app.listen(3000, ()=>{
     console.log('express server running on port 3000');
 })
 
+// connect view
 app.get("/", (req, res)=>{
     res.sendFile(path.resolve(__dirname, "pages/index.html"));
 });
@@ -48,4 +55,20 @@ app.get('/post', (req, res)=>{
 });
 app.get('/posts/new', (req, res) => {
     res.render('create');
+});
+
+// route not using asynchronous programming
+/* 
+app.post('/posts/store', (req, res) => {
+    BlogPost.create(req.body, (err, post) => {
+        console.log("post added: " + post);
+        res.redirect("/");
+    })
+}); */
+
+// route posting using asynchronous programming
+app.post('/posts/store', async (req, res) => {
+    await BlogPost.create(req.body);
+    console.log("post added: " + req.body);
+    res.redirect("/");
 });
