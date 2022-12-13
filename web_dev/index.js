@@ -61,6 +61,10 @@ app.get('/post', (req, res)=>{
 app.get('/posts/new', (req, res) => {
     res.render('create');
 });
+app.get('/post/:id', async (req, res) => {
+    const aPost = await BlogPost.findById(req.parmas.id);
+    res.render("post", {aPost});
+});
 
 // route not using asynchronous programming
 /* 
